@@ -1,4 +1,4 @@
-package com.example.restapidemo.controller
+package com.example.restapidemo.controller.dto
 
 class LoginDto(
         val id:String,val pwd:String

@@ -1,8 +1,8 @@
 package com.example.restapidemo.common.response.result.body
 
 class HatroasResult<T> (
-        val profile :String,
-        val Links:List<T>
+        val data: T,
+        val Links:List<HatroasDto>
         ): CommonResult()
 
 

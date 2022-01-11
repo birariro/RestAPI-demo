@@ -2,15 +2,16 @@ package com.example.restapidemo.controller
 
 import com.example.restapidemo.common.response.ResponseService
 import com.example.restapidemo.common.response.result.body.CommonResult
-import com.example.restapidemo.common.response.result.body.HatroasDto
+import com.example.restapidemo.common.response.result.hader.ErrorCode
+import com.example.restapidemo.controller.dto.LoginDto
+import com.example.restapidemo.controller.dto.LoginResponse
 import com.example.restapidemo.service.LoginService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/rest")
-class RESTLoginController {
+@RequestMapping("/http")
+class HTTPController {
 
     @Autowired
     lateinit var responseService : ResponseService
@@ -18,13 +19,12 @@ class RESTLoginController {
     lateinit var loginService: LoginService
     @PostMapping("/login")
     fun login(@RequestBody loginDto: LoginDto):CommonResult{
-        val links = mutableListOf<HatroasDto>().apply {
-            add(HatroasDto("home","http://localhost:8080/home"))
-            add(HatroasDto("account","http://localhost:8080/account"))
-            add(HatroasDto("setting","http://localhost:8080/setting"))
+
+        return if (loginService.validLogin(loginDto.id,loginDto.pwd)){
+            responseService.getSingleResult(LoginResponse(id = loginDto.id, jwt = "jwt:s67dsf:jasdk8iop234:odj21389"))
+        }else{
+            responseService.getFailResult(ErrorCode.CHAR_INVALID)
         }
-        val porfile ="http://server.com/doc/home"
-        return responseService.getHatroasResult(porfile,links)
     }
 }
 
