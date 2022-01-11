@@ -8,6 +8,13 @@ import org.springframework.stereotype.Service
 @Service
 class ResponseService {
 
+    //링크 를 반환하는 메소드
+    fun <T> getHatroasResult(profile:String,list: List<T>): HatroasResult<T> {
+        val result: HatroasResult<T> = HatroasResult(profile,list)
+        setSuccessResult(result)
+        return result
+    }
+
     // 단일건 결과를 처리하는 메소드
     fun <T> getSingleResult(data: T): SingleResult<T> {
         val result: SingleResult<T> = SingleResult(data)
