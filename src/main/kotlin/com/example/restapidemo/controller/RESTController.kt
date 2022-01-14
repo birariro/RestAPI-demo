@@ -22,9 +22,9 @@ class RESTLoginController {
     @PostMapping("/login")
     fun login(@RequestBody loginDto: LoginDto):CommonResult{
         val links = mutableListOf<HatroasDto>().apply {
-            add(HatroasDto("home","http://localhost:8080/home"))
-            add(HatroasDto("setting","http://localhost:8080/document"))
-            add(HatroasDto("setting","http://localhost:8080/setting"))
+            add(HatroasDto("home","http://localhost:8080/rest/home"))
+            add(HatroasDto("document","http://localhost:8080/rest/document"))
+            add(HatroasDto("setting","http://localhost:8080/rest/setting"))
         }
         return if (loginService.validLogin(loginDto.id,loginDto.pwd)){
             responseService.getSingleHatroasResult(data = LoginResponse(id = loginDto.id, jwt = "jwt:s67dsf:jasdk8iop234:odj21389"), list = links)
@@ -44,9 +44,19 @@ class RESTLoginController {
     }
     @GetMapping("/document/{id}")
     fun getDocument(@PathVariable id:Int) : CommonResult{
-        val findById = documentService.findById(id)
-        return responseService.getSingleResult(findById)
+        val findTree = documentService.findByIdAndTree(id)
+        val tree_this = findTree["this"]
+        val tree_old = findTree["old"]
+        val tree_new = findTree["new"]
+        val links = mutableListOf<HatroasDto>().apply {
+
+            if(tree_old != "")  add(HatroasDto("old","http://localhost:8080/rest/document/$tree_old"))
+            add(HatroasDto("this","http://localhost:8080/rest/document/$id"))
+            if(tree_new != "")  add(HatroasDto("old","http://localhost:8080/rest/document/$tree_new"))
+        }
+        return responseService.getSingleHatroasResult(tree_this, links)
     }
+
     @PostMapping("/document")
     fun postDocument(@RequestBody newDoc:String){
 
@@ -59,5 +69,6 @@ class RESTLoginController {
     fun deleteDocument(@PathVariable id:Int){
 
     }
+
 }
 

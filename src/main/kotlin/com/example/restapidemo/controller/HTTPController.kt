@@ -5,6 +5,7 @@ import com.example.restapidemo.common.response.result.body.CommonResult
 import com.example.restapidemo.common.response.result.hader.ErrorCode
 import com.example.restapidemo.controller.dto.LoginDto
 import com.example.restapidemo.controller.dto.LoginResponse
+import com.example.restapidemo.service.DocumentService
 import com.example.restapidemo.service.LoginService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -25,6 +26,21 @@ class HTTPController {
         }else{
             responseService.getFailResult(ErrorCode.CHAR_INVALID)
         }
+    }
+
+
+    @Autowired
+    lateinit var documentService: DocumentService
+
+    @GetMapping("/document")
+    fun getALLDocument():CommonResult{
+        val findAll = documentService.findAll()
+        return responseService.getListResult(findAll)
+    }
+    @GetMapping("/document/{id}")
+    fun getDocument(@PathVariable id:Int) : CommonResult{
+        val findById = documentService.findById(id)
+        return responseService.getSingleResult(findById)
     }
 }
 
