@@ -39,22 +39,32 @@ class RESTLoginController {
 
     @GetMapping("/document")
     fun getALLDocument():CommonResult{
-        val findAll = documentService.findAll()
-        return responseService.getListResult(findAll)
+        return try{
+            val findAll = documentService.getAllDocument()
+            return responseService.getListResult(findAll)
+        }catch (e:Exception){
+            responseService.getFailResult(ErrorCode.DB)
+        }
+
     }
     @GetMapping("/document/{id}")
     fun getDocument(@PathVariable id:Int) : CommonResult{
-        val findTree = documentService.findByIdAndTree(id)
-        val tree_this = findTree["this"]
-        val tree_old = findTree["old"]
-        val tree_new = findTree["new"]
-        val links = mutableListOf<HatroasDto>().apply {
+        return try{
+            val findTree = documentService.findByIdAndTree(id)
+            val documentThis = findTree["this"]
+            val documentOld = findTree["old"]
+            val documentNext = findTree["next"]
+            val links = mutableListOf<HatroasDto>().apply {
 
-            if(tree_old != "")  add(HatroasDto("old","http://localhost:8080/rest/document/$tree_old"))
-            add(HatroasDto("this","http://localhost:8080/rest/document/$id"))
-            if(tree_new != "")  add(HatroasDto("old","http://localhost:8080/rest/document/$tree_new"))
+                if(documentOld != "")  add(HatroasDto("old","http://localhost:8080/rest/document/$documentOld"))
+                add(HatroasDto("this","http://localhost:8080/rest/document/$id"))
+                if(documentNext != "")  add(HatroasDto("next","http://localhost:8080/rest/document/$documentNext"))
+            }
+            return responseService.getSingleHatroasResult(documentThis, links)
+
+        }catch (e:Exception){
+            responseService.getFailResult(ErrorCode.DB)
         }
-        return responseService.getSingleHatroasResult(tree_this, links)
     }
 
     @PostMapping("/document")

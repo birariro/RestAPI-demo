@@ -34,13 +34,22 @@ class HTTPController {
 
     @GetMapping("/document")
     fun getALLDocument():CommonResult{
-        val findAll = documentService.findAll()
-        return responseService.getListResult(findAll)
+        return try{
+            val findAll = documentService.getAllDocument()
+            responseService.getListResult(findAll)
+        }catch (e:Exception){
+            responseService.getFailResult(ErrorCode.DB)
+        }
     }
     @GetMapping("/document/{id}")
     fun getDocument(@PathVariable id:Int) : CommonResult{
-        val findById = documentService.findById(id)
-        return responseService.getSingleResult(findById)
+        return try{
+            val findById = documentService.getDocument(id)
+            responseService.getSingleResult(findById)
+        }catch (e:Exception){
+            responseService.getFailResult(ErrorCode.DB)
+        }
+
     }
 }
 
