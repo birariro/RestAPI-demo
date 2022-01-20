@@ -1,4 +1,4 @@
-package com.example.restapidemo.domain
+package com.example.restapidemo.restsample.domain
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -10,3 +10,6 @@ class Document (
         val id:Long,
         val text:String
         )
+
+
+

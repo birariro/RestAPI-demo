@@ -1,4 +1,4 @@
-package com.example.restapidemo.controller
+package com.example.restapidemo.restsample.controller
 
 import com.example.restapidemo.common.response.ResponseService
 import com.example.restapidemo.common.response.result.body.CommonResult

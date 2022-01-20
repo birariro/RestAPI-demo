@@ -1,6 +1,6 @@
-package com.example.restapidemo.service
+package com.example.restapidemo.restsample.service
 
-import com.example.restapidemo.domain.DocumentRepository
+import com.example.restapidemo.restsample.domain.DocumentRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service

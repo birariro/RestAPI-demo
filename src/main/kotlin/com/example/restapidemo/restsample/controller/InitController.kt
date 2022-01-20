@@ -1,9 +1,8 @@
-package com.example.restapidemo.controller
+package com.example.restapidemo.restsample.controller
 
-import com.example.restapidemo.domain.Document
-import com.example.restapidemo.domain.DocumentRepository
+import com.example.restapidemo.restsample.domain.Document
+import com.example.restapidemo.restsample.domain.DocumentRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -28,8 +27,10 @@ class InitController {
             add("hello my name zi")
         }
         for (data in dataList){
-            val document:Document = Document(0,data)
+            val document:Document = Document(id = 0,text = data)
             documentRepository.save(document)
         }
     }
+
+
 }

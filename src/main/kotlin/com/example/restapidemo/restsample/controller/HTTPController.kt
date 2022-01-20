@@ -1,12 +1,12 @@
-package com.example.restapidemo.controller
+package com.example.restapidemo.restsample.controller
 
 import com.example.restapidemo.common.response.ResponseService
 import com.example.restapidemo.common.response.result.body.CommonResult
 import com.example.restapidemo.common.response.result.hader.ErrorCode
-import com.example.restapidemo.controller.dto.LoginDto
-import com.example.restapidemo.controller.dto.LoginResponse
-import com.example.restapidemo.service.DocumentService
-import com.example.restapidemo.service.LoginService
+import com.example.restapidemo.restsample.controller.dto.LoginDto
+import com.example.restapidemo.restsample.controller.dto.LoginResponse
+import com.example.restapidemo.restsample.service.DocumentService
+import com.example.restapidemo.restsample.service.SampleLoginService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -17,7 +17,7 @@ class HTTPController {
     @Autowired
     lateinit var responseService : ResponseService
     @Autowired
-    lateinit var loginService: LoginService
+    lateinit var loginService: SampleLoginService
     @PostMapping("/login")
     fun login(@RequestBody loginDto: LoginDto):CommonResult{
 
