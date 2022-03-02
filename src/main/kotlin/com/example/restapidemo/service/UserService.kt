@@ -41,7 +41,7 @@ class UserService {
         return true
     }
     fun findUser(){
-
+        userRepository.findAll()
     }
     fun updateUser(){
 

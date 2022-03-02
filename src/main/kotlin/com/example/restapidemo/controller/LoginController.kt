@@ -15,7 +15,7 @@ class LoginController {
     lateinit var responseService : ResponseService
     @Autowired
     lateinit var loginService: LoginService
-    @PostMapping("/login")
+    @PostMapping("/login/")
     fun login(@RequestBody loginDto: LoginDto) :CommonResult{
         return responseService.getStringResult(loginService.login(loginDto.id,loginDto.pwd))
     }
